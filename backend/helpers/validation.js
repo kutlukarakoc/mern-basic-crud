@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 export const validateProduct = (product) => {
   if (!product) return false;
 
@@ -24,4 +26,8 @@ export const validateProduct = (product) => {
   }
 
   return true;
+};
+
+export const validateMongooseID = (id) => {
+  return mongoose.Types.ObjectId.isValid(id);
 };
