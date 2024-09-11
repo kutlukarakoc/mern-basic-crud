@@ -1,6 +1,6 @@
 import Product from "../models/product.model.js";
 
-import { validateProduct } from "../helpers/validation.js";
+import { validateMongooseID, validateProduct } from "../helpers/validation.js";
 
 export const getProducts = async (req, res) => {
   try {
@@ -21,7 +21,37 @@ export const getProducts = async (req, res) => {
   }
 };
 
-export const getProductById = async (req, res) => {};
+export const getProductById = async (req, res) => {
+  const id = req.params.id;
+
+  if (!validateMongooseID(id)) {
+    return res
+      .status(400)
+      .json({ status: "error", message: "Invalid Product ID." });
+  }
+
+  try {
+    const product = await Product.findById(id);
+
+    if (!product) {
+      return res
+        .status(404)
+        .json({ status: "error", message: "Product not found." });
+    }
+
+    res.status(200).json({
+      status: "success",
+      message: "Product retrieved successfully.",
+      data: product,
+    });
+  } catch (error) {
+    console.log("Error getting product:", error.message);
+    res.status(500).json({
+      status: "error",
+      message: "An error occured while getting product.",
+    });
+  }
+};
 
 export const createProduct = async (req, res) => {
   const product = req.body;
