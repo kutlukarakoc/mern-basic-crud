@@ -1,6 +1,6 @@
 import Product from "../models/product.model.js";
 
-import { validateMongooseID, validateProduct } from "../helpers/validation.js";
+import { valiteID, validateProduct } from "../helpers/validation.js";
 
 export const getProducts = async (req, res) => {
   try {
@@ -24,7 +24,7 @@ export const getProducts = async (req, res) => {
 export const getProductById = async (req, res) => {
   const id = req.params.id;
 
-  if (!validateMongooseID(id)) {
+  if (!valiteID(id)) {
     return res
       .status(400)
       .json({ status: "error", message: "Invalid Product ID." });
@@ -85,7 +85,7 @@ export const updateProduct = async (req, res) => {
   const id = req.params.id;
   const product = req.body;
 
-  if (!validateMongooseID(id)) {
+  if (!valiteID(id)) {
     return res
       .status(400)
       .json({ status: "error", message: "Invalid Product ID." });
@@ -125,7 +125,7 @@ export const updateProduct = async (req, res) => {
 export const deleteProduct = async (req, res) => {
   const id = req.params.id;
 
-  if (!validateMongooseID(id)) {
+  if (!valiteID(id)) {
     return res
       .status(400)
       .json({ status: "error", message: "Invalid Product ID." });

@@ -28,6 +28,6 @@ export const validateProduct = (product) => {
   return true;
 };
 
-export const validateMongooseID = (id) => {
+export const valiteID = (id) => {
   return mongoose.Types.ObjectId.isValid(id);
 };
