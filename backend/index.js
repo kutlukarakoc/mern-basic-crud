@@ -8,6 +8,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.port || 5008;
 
+app.use(express.json());
 app.use('/api/products', productRoutes);
 
 app.listen(PORT, () => {
