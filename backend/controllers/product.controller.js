@@ -81,6 +81,45 @@ export const createProduct = async (req, res) => {
   }
 };
 
-export const updateProduct = async (req, res) => {};
+export const updateProduct = async (req, res) => {
+  const id = req.params.id;
+  const product = req.body;
+
+  if (!validateMongooseID(id)) {
+    return res
+      .status(400)
+      .json({ status: "error", message: "Invalid Product ID." });
+  }
+
+  if (!validateProduct(product)) {
+    return res
+      .status(400)
+      .json({ status: "error", message: "All fields are required." });
+  }
+
+  try {
+    const updatedProduct = await Product.findByIdAndUpdate(id, product, {
+      new: true,
+    });
+
+    if (!updatedProduct) {
+      return res
+        .status(404)
+        .json({ status: "error", message: "Product not found." });
+    }
+
+    res.status(200).json({
+      status: "success",
+      message: "Product updated successfully.",
+      data: updatedProduct,
+    });
+  } catch (error) {
+    console.log("Error updating product:", error.message);
+    res.status(500).json({
+      status: "error",
+      message: "An error occured while updating product.",
+    });
+  }
+};
 
 export const deleteProduct = async (req, res) => {};
