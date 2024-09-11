@@ -122,4 +122,34 @@ export const updateProduct = async (req, res) => {
   }
 };
 
-export const deleteProduct = async (req, res) => {};
+export const deleteProduct = async (req, res) => {
+  const id = req.params.id;
+
+  if (!validateMongooseID(id)) {
+    return res
+      .status(400)
+      .json({ status: "error", message: "Invalid Product ID." });
+  }
+
+  try {
+    const deletedProduct = await Product.findByIdAndDelete(id);
+
+    if (!deletedProduct) {
+      return res
+        .status(404)
+        .json({ status: "error", message: "Product not found." });
+    }
+
+    res.status(200).json({
+      status: "success",
+      message: "Product deleted successfully.",
+      data: deletedProduct,
+    });
+  } catch (error) {
+    console.log("Error deleting product:", error.message);
+    res.status(500).json({
+      status: "error",
+      message: "An error occured while deleting product.",
+    });
+  }
+};
