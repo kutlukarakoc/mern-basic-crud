@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { getProducts } from "@/services/getProducts";
+import { getProducts } from "@/services/get-products";
 
-import { ProductsTable } from "@/components/products-table";
+import { ProductsTable } from "@/components/ProductsTable";
 
 export const Route = createFileRoute("/")({
   component: Home,
