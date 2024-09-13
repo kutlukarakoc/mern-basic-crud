@@ -27,7 +27,7 @@ export const ProductsTable = ({ products }: ProductsTableProps) => {
           <TableHead>Brand</TableHead>
           <TableHead>Name</TableHead>
           <TableHead className="w-52">Price</TableHead>
-          <TableHead className="text-right">Actions</TableHead>
+          <TableHead>Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
