@@ -13,7 +13,7 @@
       }
   ],
   "functions": {
-    "controllers/*.js": {
+    "api/*.js": {
       "maxDuration": 60
     }
   }
