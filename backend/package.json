@@ -4,9 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "NODE_ENV=development nodemon backend/index.js",
-    "start": "NODE_ENV=production node backend/index.js",
-    "build": "npm run build"
+    "dev": "nodemon backend/index.js",
+    "start": "node backend/index.js"
   },
   "type": "module",
   "keywords": [],
