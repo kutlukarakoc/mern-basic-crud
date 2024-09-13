@@ -6,10 +6,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Link } from "@tanstack/react-router";
+import { SquareArrowOutUpRight } from "lucide-react";
 
-import type { Products } from "@/types/products";
 import { DeleteProduct } from "./DeleteProduct";
 import { EditOrCreateProduct } from "./edit-create";
+
+import type { Products } from "@/types/products";
+import { Button } from "./ui/button";
 
 type ProductsTableProps = {
   products: Products | undefined;
@@ -37,6 +41,11 @@ export const ProductsTable = ({ products }: ProductsTableProps) => {
                 <div className="flex gap-2">
                   <EditOrCreateProduct format="edit" product={product} />
                   <DeleteProduct product={product} />
+                  <Button asChild variant="outline" size="icon">
+                    <Link to={`product/${product._id}`}>
+                      <SquareArrowOutUpRight className="h-4 w-4" />
+                    </Link>
+                  </Button>
                 </div>
               </TableCell>
             </TableRow>
