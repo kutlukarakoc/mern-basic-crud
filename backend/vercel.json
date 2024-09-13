@@ -13,7 +13,7 @@
       }
   ],
   "functions": {
-    "/*.js": {
+    "routes/*.js": {
       "maxDuration": 60
     }
   }
