@@ -16,18 +16,22 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "./ui/textarea";
+import { Textarea } from "../ui/textarea";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
-  createProductSchema,
-  CreateProductForm as FormType,
-} from "@/schemas/create-product-schema";
+  productFormSchema,
+  ProductFormValues,
+} from "@/schemas/product-form-schema";
 
 import { useToast } from "@/hooks/use-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import { createProduct } from "@/services/create-product";
+import { editProduct } from "@/services/edit-product";
+
+import { generateProductFormDefaults } from "@/lib/utils";
 
 import type { AxiosError } from "axios";
 import type { ErrorResponse } from "@/types/error-response";
@@ -35,30 +39,34 @@ import type { Product } from "@/types/product";
 
 import { categories } from "@/constants/categories";
 
-type CreateProductFormProps = {
+type ProductFormProps = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  format: "edit" | "create";
+  product?: Product;
 };
 
-export const CreateProductForm = ({ setShowModal }: CreateProductFormProps) => {
+export const ProductForm = ({
+  setShowModal,
+  format,
+  product,
+}: ProductFormProps) => {
+  const isEditForm = format === "edit" && product ? true : false;
+
   const { toast } = useToast();
 
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation({
-    mutationFn: (product: FormType) => createProduct(product),
-    onError: (error: AxiosError<ErrorResponse>) => {
-      const message = error.response?.data.message || "An error occurred";
-      toast({
-        description: message,
-        variant: "destructive",
-      });
-    },
+    mutationFn: async (formValues: ProductFormValues) =>
+      isEditForm
+        ? await editProduct(product!._id, formValues)
+        : await createProduct(formValues),
     onSuccess: (data: {
       data: Product;
       message: string;
       status: "success" | "error";
     }) => {
-      if (data.message === "success") {
+      if (data.status === "success") {
         toast({ description: data.message, variant: "success" });
         queryClient.invalidateQueries({ queryKey: ["products"] });
         setShowModal(false);
@@ -67,24 +75,21 @@ export const CreateProductForm = ({ setShowModal }: CreateProductFormProps) => {
 
       toast({ description: data.message, variant: "destructive" });
     },
-  });
-
-  const form = useForm<FormType>({
-    resolver: zodResolver(createProductSchema),
-    defaultValues: {
-      brand: "",
-      name: "",
-      price: undefined as unknown as number,
-      description: "",
-      imageUrl: "",
-      category: {
-        name: "",
-        id: undefined as unknown as number,
-      },
+    onError: (error: AxiosError<ErrorResponse>) => {
+      const message = error.response?.data.message || "An error occurred";
+      toast({
+        description: message,
+        variant: "destructive",
+      });
     },
   });
 
-  const onSubmit = (values: FormType) => mutate(values);
+  const form = useForm<ProductFormValues>({
+    resolver: zodResolver(productFormSchema),
+    defaultValues: generateProductFormDefaults(isEditForm, product),
+  });
+
+  const onSubmit = (formValues: ProductFormValues) => mutate(formValues);
 
   return (
     <Form {...form}>
@@ -156,6 +161,11 @@ export const CreateProductForm = ({ setShowModal }: CreateProductFormProps) => {
                         id: Number(value.split("__")[1]),
                       });
                     }}
+                    defaultValue={
+                      isEditForm
+                        ? `${product!.category.name}__${product!.category.id}`
+                        : ""
+                    }
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -167,6 +177,11 @@ export const CreateProductForm = ({ setShowModal }: CreateProductFormProps) => {
                         <SelectItem
                           key={category.id}
                           value={`${category.name}__${category.id}`}
+                          defaultValue={
+                            isEditForm
+                              ? `${product!.category.name}__${product!.category.id}`
+                              : ""
+                          }
                         >
                           {category.name}
                         </SelectItem>

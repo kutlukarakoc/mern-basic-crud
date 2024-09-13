@@ -1,6 +1,6 @@
-import type { CreateProductForm } from "@/schemas/create-product-schema";
+import type { ProductFormValues } from "@/schemas/product-form-schema";
 
-export const createProduct = async (product: CreateProductForm) => {
+export const createProduct = async (product: ProductFormValues) => {
   const response = await fetch("/api/products", {
     method: "POST",
     headers: {

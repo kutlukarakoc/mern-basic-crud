@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getProducts } from "@/services/get-products";
 
 import { ProductsTable } from "@/components/ProductsTable";
-import { CreateProduct } from "@/components/CreateProduct";
+import { EditOrCreateProduct } from "@/components/edit-create";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -23,7 +23,7 @@ function Home() {
     <div className="container mx-auto mt-10">
       <div className="flex justify-between mb-10">
         <h3>My Products</h3>
-        <CreateProduct />
+        <EditOrCreateProduct format="create" />
       </div>
       <ProductsTable products={data} />
     </div>

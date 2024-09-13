@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const createProductSchema = z.object({
+export const productFormSchema = z.object({
   brand: z.string().min(1, {
     message: "Brand is required.",
   }),
@@ -32,4 +32,4 @@ export const createProductSchema = z.object({
     }),
 });
 
-export type CreateProductForm = z.infer<typeof createProductSchema>;
+export type ProductFormValues = z.infer<typeof productFormSchema>;
