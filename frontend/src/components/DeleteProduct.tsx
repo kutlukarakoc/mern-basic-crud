@@ -58,14 +58,13 @@ export const DeleteProduct = ({ product }: DeleteProductProps) => {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. {brand} - {name} will permanently delete.
+            This action cannot be undone. {brand} - {name} will permanently
+            delete.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={() => mutate()}>
-            Delete
-          </AlertDialogAction>
+          <AlertDialogAction onClick={() => mutate()}>Delete</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
