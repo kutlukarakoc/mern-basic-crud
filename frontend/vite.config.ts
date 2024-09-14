@@ -13,6 +13,7 @@ export default defineConfig({
     proxy: {
       "/api": {
         target: "https://mern-basic-crud-server-ashy.vercel.app",
+        changeOrigin: true,
       },
     },
   },
