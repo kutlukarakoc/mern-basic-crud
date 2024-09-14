@@ -6,6 +6,12 @@
       "use": "@vercel/node"
     }
   ],
+  "rewrites": [
+    {
+      "source": "/api/:match*",
+      "destination": "https://mern-basic-crud-server-ashy.vercel.app/:match*"
+    }
+  ],
   "routes": [
     {
       "src": "/(.*)",
