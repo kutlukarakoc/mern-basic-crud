@@ -13,5 +13,13 @@
     ],
     "routes": [
       { "src": "/(.*)", "dest": "/" }
-    ]
+    ],
+    "functions": {
+      "routes/*.js": {
+        "maxDuration": 60
+      },
+      "controllers/*.js": {
+        "maxDuration": 60
+      }
+    }
   }
