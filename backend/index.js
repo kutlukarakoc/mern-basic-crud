@@ -20,7 +20,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use('/api/products', productRoutes);
 
-app.listen(PORT, () => {
-  connectToDB();
+app.listen(PORT, async () => {
+  await connectToDB();
   console.log(`Server is running on port ${PORT}`);
 });
