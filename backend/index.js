@@ -9,11 +9,13 @@ dotenv.config();
 const app = express();
 const PORT = process.env.port || 5008;
 
-app.use(cors({
+const corsOptions = {
   origin: '*',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-}));
+};
+app.options('', cors(corsOptions));
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use('/api/products', productRoutes);
