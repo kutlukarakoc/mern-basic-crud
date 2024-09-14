@@ -26,14 +26,8 @@ app.use("/api/products", productRoutes);
 app.use(
   "/api",
   createProxyMiddleware({
-    target: "https://mern-basic-crud-server-ashy.vercel.app/api",
+    target: "https://" + process.env.MAIN_APP_URL + '/api',
     changeOrigin: true,
-    onProxyReq: (proxyReq, req) => {
-      console.log('proxyReq', proxyReq.path);
-    },
-    onProxyRes: (proxyRes, req, res) => {
-      console.log('proxyRes', proxyRes.statusCode);
-    },
   })
 );
 
