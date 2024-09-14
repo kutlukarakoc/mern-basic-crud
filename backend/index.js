@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import { connectToDB } from "./config/db.js";
 import productRoutes from "./routes/product.route.js";
 import cors from "cors";
+import proxy from "express-http-proxy";
 
 dotenv.config();
 
@@ -18,6 +19,10 @@ const corsOptions = {
 };
 app.options("", cors(corsOptions));
 app.use(cors(corsOptions));
+
+if (process.env.NODE_ENV === "production") {
+  app.use("/api", proxy(process.env.MAIN_APP_URL));
+}
 
 app.use(express.json());
 app.use("/api/products", productRoutes);
