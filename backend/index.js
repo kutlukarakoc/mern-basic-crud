@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import { connectToDB } from "./config/db.js";
 import productRoutes from "./routes/product.route.js";
 import cors from "cors";
-import { createProxyMiddleware } from "http-proxy-middleware";
 
 dotenv.config();
 
@@ -19,14 +18,6 @@ const corsOptions = {
 };
 app.options("", cors(corsOptions));
 app.use(cors(corsOptions));
-
-app.use(
-  "/api",
-  createProxyMiddleware({
-    target: process.env.MAIN_APP_URL,
-    changeOrigin: true,
-  })
-);
 
 app.use(express.json());
 app.use("/api/products", productRoutes);
