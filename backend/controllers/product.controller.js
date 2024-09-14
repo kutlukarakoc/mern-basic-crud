@@ -4,7 +4,7 @@ import { valiteID, validateProduct } from "../helpers/validation.js";
 
 export const getProducts = async (req, res) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find({});
 
     res.status(200).json({
       status: "success",
@@ -16,7 +16,7 @@ export const getProducts = async (req, res) => {
     console.log("Error getting products:", error.message);
     res.status(500).json({
       status: "error",
-      message: "An error occured while getting products.",
+      message: "An error occured while getting products: " + error.message,
     });
   }
 };
