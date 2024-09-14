@@ -20,9 +20,9 @@ const corsOptions = {
 app.options("", cors(corsOptions));
 app.use(cors(corsOptions));
 
-if (process.env.NODE_ENV === "production") {
-  app.use("/api", proxy(process.env.MAIN_APP_URL));
-}
+// if (process.env.NODE_ENV === "production") {
+//   app.use("/api", proxy(process.env.MAIN_APP_URL));
+// }
 
 app.use(express.json());
 app.use("/api/products", productRoutes);
