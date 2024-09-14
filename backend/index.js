@@ -20,15 +20,13 @@ const corsOptions = {
 app.options("", cors(corsOptions));
 app.use(cors(corsOptions));
 
-if (process.env.NODE_ENV === "production") {
-  app.use(
-    "/api",
-    createProxyMiddleware({
-      target: process.env.MAIN_APP_URL,
-      changeOrigin: true,
-    })
-  );
-}
+app.use(
+  "/api",
+  createProxyMiddleware({
+    target: process.env.MAIN_APP_URL,
+    changeOrigin: true,
+  })
+);
 
 app.use(express.json());
 app.use("/api/products", productRoutes);
