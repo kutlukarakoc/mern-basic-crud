@@ -8,8 +8,8 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "https://mern-basic-crud-server-ashy.vercel.app",
+      "src": "/api/:path(.*)",
+      "dest": "https://mern-basic-crud-server-ashy.vercel.app/api/:path",
       "methods": [
         "GET",
         "POST",
