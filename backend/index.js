@@ -1,8 +1,9 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import { connectToDB } from './config/db.js';
+// import { connectToDB } from './config/db.js';
 import productRoutes from './routes/product.route.js';
 import cors from 'cors';
+import mongoose from 'mongoose';
 
 dotenv.config();
 
@@ -21,6 +22,12 @@ app.use(express.json());
 app.use('/api/products', productRoutes);
 
 app.listen(PORT, async () => {
-  await connectToDB();
+  try {
+    await mongoose.connect(process.env.DB_URI);
+    console.log("Connected to MongoDB");
+  } catch (error) {
+    console.error("Error connecting to MongoDB", error);
+    process.exit(1); // Exit the process if the connection fails
+  }
   console.log(`Server is running on port ${PORT}`);
 });
