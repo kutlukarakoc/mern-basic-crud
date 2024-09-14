@@ -16,7 +16,7 @@ export const getProducts = async (req, res) => {
     console.log("Error getting products:", error.message);
     res.status(500).json({
       status: "error",
-      message: "An error occured while getting products:" + error.message,
+      message: "An error occured while getting products.",
     });
   }
 };
