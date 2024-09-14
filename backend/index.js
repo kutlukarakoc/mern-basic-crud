@@ -23,7 +23,7 @@ app.use(cors(corsOptions));
 app.use(
   "/api",
   createProxyMiddleware({
-    target: "https://mern-basic-crud-server-ashy.vercel.app/api",
+    target: "https://mern-basic-crud-server-ashy.vercel.app",
     changeOrigin: true,
   })
 );
