@@ -24,7 +24,7 @@ app.use(
   "/api",
   createProxyMiddleware({
     target: "https://mern-basic-crud-server-ashy.vercel.app",
-    changeOrigin: true,
+    // changeOrigin: true,
   })
 );
 
