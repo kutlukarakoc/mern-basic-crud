@@ -20,16 +20,22 @@ const corsOptions = {
 app.options("", cors(corsOptions));
 app.use(cors(corsOptions));
 
+app.use(express.json());
+app.use("/api/products", productRoutes);
+
 app.use(
   "/api",
   createProxyMiddleware({
-    target: "https://mern-basic-crud-server-ashy.vercel.app",
+    target: "https://mern-basic-crud-server-ashy.vercel.app/api",
     changeOrigin: true,
+    onProxyReq: (proxyReq, req) => {
+      console.log('proxyReq', proxyReq.path);
+    },
+    onProxyRes: (proxyRes, req, res) => {
+      console.log('proxyRes', proxyRes.statusCode);
+    },
   })
 );
-
-app.use(express.json());
-app.use("/api/products", productRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
