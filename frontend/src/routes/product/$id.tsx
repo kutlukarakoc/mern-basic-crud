@@ -23,8 +23,6 @@ function Detail() {
 
   if (!data) return <div>Not found</div>;
 
-  console.log("data", data);
-
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="grid md:grid-cols-2 gap-8">
