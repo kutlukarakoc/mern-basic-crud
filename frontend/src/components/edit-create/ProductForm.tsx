@@ -237,7 +237,7 @@ export const ProductForm = ({
         />
 
         <Button type="submit" className="float-right" disabled={isPending}>
-          {isPending && <LoaderCircle className="w-4 h-4 mr-2 animate-spin">{isPending}</LoaderCircle>}
+          {isPending && <LoaderCircle className="w-4 h-4 mr-2 animate-spin" />}
           {isEditForm ? "Edit" : "Create"}
         </Button>
       </form>
