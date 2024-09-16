@@ -10,7 +10,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "./ui/button";
-import { Trash } from "lucide-react";
+import { LoaderCircle, Trash } from "lucide-react";
 
 import { useToast } from "@/hooks/use-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -32,7 +32,7 @@ export const DeleteProduct = ({ product }: DeleteProductProps) => {
 
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: () => deleteProduct(_id),
     onError: (error: AxiosError<ErrorResponse>) => {
       const message = error.response?.data.message || "An error occurred";
@@ -64,7 +64,10 @@ export const DeleteProduct = ({ product }: DeleteProductProps) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={() => mutate()}>Delete</AlertDialogAction>
+          <AlertDialogAction disabled={isPending} onClick={() => mutate()}>
+            {isPending && <LoaderCircle className="w-4 h-4 mr-2 animate-spin" />}
+            Delete
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
