@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "../ui/textarea";
+import { LoaderCircle } from "lucide-react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -56,7 +57,7 @@ export const ProductForm = ({
 
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async (formValues: ProductFormValues) =>
       isEditForm
         ? await editProduct(product!._id, formValues)
@@ -235,8 +236,9 @@ export const ProductForm = ({
           )}
         />
 
-        <Button type="submit" className="float-right">
-          Create
+        <Button type="submit" className="float-right" disabled={isPending}>
+          {isPending && <LoaderCircle className="w-4 h-4 mr-2 animate-spin">{isPending}</LoaderCircle>}
+          {isEditForm ? "Edit" : "Create"}
         </Button>
       </form>
     </Form>
